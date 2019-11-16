@@ -26,13 +26,13 @@ export const Pinterest = {
             proxyurl +
                 "https://gist.githubusercontent.com/sarahhendricks/0c8681884bdd629221b50418b04942a1/raw/f90ef2ff10a1e1aed68cb10cb89d434c3b0780bd/pinterest.json"
         )
-            .then((response: Response) => {
+            .then(response => response.json())
+            .then(response => response as BoardPinsResponse)
+            .then(response => {
                 console.log(
-                    `Here is the response json: ${JSON.stringify(
-                        response.json()
-                    )}`
+                    `Here is the response json: ${JSON.stringify(response)}`
                 );
-                // TODO: how to call the callback now?
+                callback(response);
             })
             .catch(error => console.log(error));
         // PDK.request(`/boards/daisyinaglass/${boardId}/pins/`, callback);
