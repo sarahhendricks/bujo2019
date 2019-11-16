@@ -1,16 +1,7 @@
 import React, { useEffect, FunctionComponent } from "react";
 import "./App.css";
-import Pinterest from "./util.js";
-
-type Pin = {
-    url: string;
-    id: string;
-    link: string;
-    description: string;
-};
-type BoardPinsResponse = {
-    data: Array<Pin>;
-};
+import { Pinterest } from "./util";
+import { BoardPinsResponse } from "./types";
 
 const App: FunctionComponent = () => {
     useEffect(() => {
