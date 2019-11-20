@@ -21,7 +21,8 @@ export const pins = createReducer(Array() as Array<Pin>).handleAction(
 );
 
 const pinsReducer = combineReducers({
-    isFetchingData
+    isFetchingData,
+    pins
 });
 
 export default pinsReducer;
