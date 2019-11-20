@@ -10,6 +10,10 @@ const App: FunctionComponent = () => {
             console.log("Calling login callback");
             Pinterest.pins("may-inspo", (response: BoardPinsResponse) => {
                 console.log(`Pins: ${response.data}`);
+                // TODO: dispatch the success action here, just to test getting
+                // the data into the store.
+                // Later we will dispatch the request from here and it will go
+                // through an epic to get the data.
                 setPins(response.data);
             });
         });
