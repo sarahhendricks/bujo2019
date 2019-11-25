@@ -1,7 +1,6 @@
-import React, { useEffect, FunctionComponent, useState } from "react";
+import React, { useEffect, FunctionComponent } from "react";
 import "./App.css";
 import { Pinterest } from "./util";
-import { BoardPinsResponse, Pin } from "./types";
 import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
 import { selectPinsByMonth } from "./store/pins/selectors";
@@ -11,7 +10,7 @@ const mapStateToProps = (state: PinState) => ({
     pins: selectPinsByMonth(state, { month: "may" })
 });
 const dispatchProps = {
-    fetchPinsSuccess: fetchPinsAsync.success
+    fetchPinsRequest: fetchPinsAsync.request
 };
 
 type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
@@ -19,13 +18,8 @@ type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
 const App: FunctionComponent<Props> = props => {
     useEffect(() => {
         Pinterest.login(() => {
-            Pinterest.pins("may-inspo", (response: BoardPinsResponse) => {
-                console.log(`Pins: ${response.data}`);
-
-                props.fetchPinsSuccess({ month: "may", pins: response.data });
-                // Later we will dispatch the request from here and it will go
-                // through an epic to get the data.
-            });
+            // TODO: obviously we're going to need to request more than one month eventually
+            props.fetchPinsRequest("may");
         });
     }, []);
 

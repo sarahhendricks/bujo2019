@@ -24,6 +24,7 @@ export const Pinterest = {
         // var params = {
         //     fields: "id, note, link, image"
         // };
+        // PDK.request(`/boards/daisyinaglass/${boardId}/pins/`, params, callback);
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch(
             proxyurl +
@@ -38,7 +39,7 @@ export const Pinterest = {
                 callback(response);
             })
             .catch(error => console.log(error));
-        // PDK.request(`/boards/daisyinaglass/${boardId}/pins/`, params, callback);
+
         console.log("Finished calling getting the pins.");
     }
 };
