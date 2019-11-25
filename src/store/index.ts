@@ -1,8 +1,8 @@
-import { createStore } from "redux";
-import pinsReducer from "./pins/reducers";
+import { createStore, applyMiddleware } from "redux";
 import { createEpicMiddleware } from "redux-observable";
 import { RootAction, RootState } from "typesafe-actions";
 import { pinsEpic } from "./pins/epics";
+import { rootReducer } from "./root-reducer";
 
 export const epicMiddleware = createEpicMiddleware<
     RootAction,
@@ -10,9 +10,8 @@ export const epicMiddleware = createEpicMiddleware<
     RootState
 >();
 
-epicMiddleware.run(pinsEpic);
+const store = createStore(rootReducer, applyMiddleware(epicMiddleware));
 
-// TODO: do we need to make enhancers here?
-const store = createStore(pinsReducer, {});
+epicMiddleware.run(pinsEpic);
 
 export default store;
