@@ -3,10 +3,11 @@ import "./App.css";
 import { Pinterest } from "./util";
 import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
-import { selectPinsByMonth } from "./store/pins/selectors";
+import { selectPinsByMonth, selectIsLoadingPins } from "./store/pins/selectors";
 import { PinState } from "./store/pins/reducers";
 
 const mapStateToProps = (state: PinState) => ({
+    isLoadingPins: selectIsLoadingPins(state),
     pins: selectPinsByMonth(state, { month: "may" })
 });
 const dispatchProps = {
@@ -26,6 +27,7 @@ const App: FunctionComponent<Props> = props => {
     return (
         <div className="App">
             <div id="may">
+                {props.isLoadingPins && <h1>Loading...</h1>}
                 {props.pins &&
                     props.pins.map(pin => (
                         <a href={pin.link} key={pin.id}>
