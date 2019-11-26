@@ -5,6 +5,7 @@ import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
 import { selectPinsByMonth, selectIsLoadingPins } from "./store/pins/selectors";
 import { PinState } from "./store/pins/reducers";
+import { Loader, Dimmer } from "semantic-ui-react";
 
 const mapStateToProps = (state: PinState) => ({
     isLoadingPins: selectIsLoadingPins(state),
@@ -27,7 +28,13 @@ const App: FunctionComponent<Props> = props => {
     return (
         <div className="App">
             <div id="may">
-                {props.isLoadingPins && <h1>Loading...</h1>}
+                {/* TODO: going to need to make sure this only displays in divs that don't have any
+                items yet */}
+                {props.isLoadingPins && (
+                    <Dimmer active inverted>
+                        <Loader />
+                    </Dimmer>
+                )}
                 {props.pins &&
                     props.pins.map(pin => (
                         <a href={pin.link} key={pin.id}>
