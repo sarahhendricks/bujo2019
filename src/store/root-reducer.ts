@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import pinsReducer from "./pins/reducers";
 
-export const rootReducer = combineReducers(pinsReducer);
+export const rootReducer = combineReducers({ pinsReducer });
 
 export default rootReducer;
