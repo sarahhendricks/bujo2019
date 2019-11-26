@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent } from "react";
 import "./App.css";
-import { Pinterest } from "./util";
+import { Pinterest, isInView } from "./util";
 import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
 import { selectPinsByMonth, selectIsLoadingPins } from "./store/pins/selectors";
@@ -20,13 +20,18 @@ type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
 const App: FunctionComponent<Props> = props => {
     useEffect(() => {
         Pinterest.login(() => {
-            // TODO: obviously we're going to need to request more than one month eventually
+            // TODO: remove this call; it should be done by individual divs (I think?)
             props.fetchPinsRequest("may");
         });
     }, []);
 
     return (
         <div className="App">
+            {/* TODO:
+                - Loop over the months by name so theres not 12 copies
+                - Determine which divs are in the viewport
+                - Run the dispatch on the visible divs to grab their content
+                -  */}
             <div id="may">
                 {/* TODO: going to need to make sure this only displays in divs that don't have any
                 items yet */}

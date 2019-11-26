@@ -44,3 +44,15 @@ export const Pinterest = {
         console.log("Finished calling getting the pins.");
     }
 };
+
+export const isInView = (element: HTMLElement): boolean => {
+    const bounds = element.getBoundingClientRect();
+    return (
+        bounds.top >= 0 &&
+        bounds.left >= 0 &&
+        bounds.right <=
+            (window.innerWidth || document.documentElement.clientWidth) &&
+        bounds.bottom <=
+            (window.innerHeight || document.documentElement.clientHeight)
+    );
+};
