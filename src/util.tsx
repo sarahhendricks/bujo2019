@@ -19,11 +19,12 @@ export const Pinterest = {
         console.log("Finished calling login.");
     },
 
-    pins: (boardId: string, callback: (json: BoardPinsResponse) => void) => {
-        console.log(`About to call getting the pins for ${boardId}`);
+    pins: (boardName: string, callback: (json: BoardPinsResponse) => void) => {
+        console.log(`About to call getting the pins for ${boardName}`);
         // var params = {
         //     fields: "id, note, link, image"
         // };
+        // var boardId = `${boardName}-inspo`;
         // PDK.request(`/boards/daisyinaglass/${boardId}/pins/`, params, callback);
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch(
