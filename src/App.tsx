@@ -25,12 +25,14 @@ const App: FunctionComponent<Props> = props => {
 
     return (
         <div className="App">
-            {props.pins &&
-                props.pins.map(pin => (
-                    <a href={pin.link} key={pin.id}>
-                        <img src={pin.image.original.url} alt={pin.note} />
-                    </a>
-                ))}
+            <div id="may">
+                {props.pins &&
+                    props.pins.map(pin => (
+                        <a href={pin.link} key={pin.id}>
+                            <img src={pin.image.original.url} alt={pin.note} />
+                        </a>
+                    ))}
+            </div>
         </div>
     );
 };

@@ -34,9 +34,9 @@ export const Pinterest = {
             .then(response => response.json())
             .then(response => response as BoardPinsResponse)
             .then(response => {
-                console.log(
-                    `Here is the response json: ${JSON.stringify(response)}`
-                );
+                // console.log(
+                //     `Here is the response json: ${JSON.stringify(response)}`
+                // );
                 callback(response);
             })
             .catch(error => console.log(error));
