@@ -1,4 +1,5 @@
 import { BoardPinsResponse } from "./types";
+import { List } from "immutable";
 
 var Const = require("./const");
 
@@ -56,3 +57,18 @@ export const isInView = (element: HTMLElement): boolean => {
             (window.innerHeight || document.documentElement.clientHeight)
     );
 };
+
+export const months = List.of(
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
+);

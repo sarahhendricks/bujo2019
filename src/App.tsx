@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent } from "react";
 import "./App.css";
-import { Pinterest, isInView } from "./util";
+import { Pinterest, isInView, months } from "./util";
 import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
 import { selectPinsByMonth, selectIsLoadingPins } from "./store/pins/selectors";
@@ -28,23 +28,27 @@ const App: FunctionComponent<Props> = props => {
     return (
         <div className="App">
             {/* TODO:
-                - Loop over the months by name so theres not 12 copies
                 - Determine which divs are in the viewport
                 - Run the dispatch on the visible divs to grab their content
                 -  */}
-            <div id="may">
-                {props.isLoadingPins && !props.pins && (
-                    <Dimmer active inverted>
-                        <Loader />
-                    </Dimmer>
-                )}
-                {props.pins &&
-                    props.pins.map(pin => (
-                        <a href={pin.link} key={pin.id}>
-                            <img src={pin.image.original.url} alt={pin.note} />
-                        </a>
-                    ))}
-            </div>
+            {months.map(month => (
+                <div id={month} key={month}>
+                    {props.isLoadingPins && !props.pins && (
+                        <Dimmer active inverted>
+                            <Loader />
+                        </Dimmer>
+                    )}
+                    {props.pins &&
+                        props.pins.map(pin => (
+                            <a href={pin.link} key={pin.id}>
+                                <img
+                                    src={pin.image.original.url}
+                                    alt={pin.note}
+                                />
+                            </a>
+                        ))}
+                </div>
+            ))}
         </div>
     );
 };
