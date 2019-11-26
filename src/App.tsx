@@ -33,9 +33,7 @@ const App: FunctionComponent<Props> = props => {
                 - Run the dispatch on the visible divs to grab their content
                 -  */}
             <div id="may">
-                {/* TODO: going to need to make sure this only displays in divs that don't have any
-                items yet */}
-                {props.isLoadingPins && (
+                {props.isLoadingPins && !props.pins && (
                     <Dimmer active inverted>
                         <Loader />
                     </Dimmer>
