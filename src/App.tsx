@@ -3,14 +3,21 @@ import "./App.css";
 import { Pinterest, months } from "./util";
 import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
-import { selectPinsByMonth, selectIsLoadingPins } from "./store/pins/selectors";
+import {
+    selectIsLoadingPins,
+    selectPins,
+    selectPinsByMonth
+} from "./store/pins/selectors";
 import { PinState } from "./store/pins/reducers";
 import { Loader, Dimmer } from "semantic-ui-react";
 import VisibilitySensor from "react-visibility-sensor";
+import uuid from "uuid";
 
 const mapStateToProps = (state: PinState) => ({
     isLoadingPins: selectIsLoadingPins(state),
-    pins: selectPinsByMonth(state, { month: "may" })
+    // TODO: need to figure out how to get these dynamically...
+    // pins: selectPinsByMonth(state, { month: "may" })
+    pins: selectPins(state)
 });
 const dispatchProps = {
     fetchPinsRequest: fetchPinsAsync.request
@@ -18,8 +25,15 @@ const dispatchProps = {
 
 type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
 
-const onVisibilityChange = (isVisible: boolean, month: string) => {
-    console.log(`${month} is visible now: ${isVisible}`);
+const onVisibilityChange = (
+    isVisible: boolean,
+    month: string,
+    pinCallback: any
+) => {
+    console.log(`the month is ${month} and I am visible: ${isVisible}`);
+    if (isVisible) {
+        pinCallback(month);
+    }
 };
 
 const resizeImage = (originalHeight: number, originalWidth: number) => {
@@ -31,23 +45,21 @@ const resizeImage = (originalHeight: number, originalWidth: number) => {
 
 const App: FunctionComponent<Props> = props => {
     useEffect(() => {
-        Pinterest.login(() => {
-            // TODO: remove this call; it should be done by individual divs (I think?)
-            props.fetchPinsRequest("may");
-        });
+        Pinterest.login(() => {});
     }, []);
 
     return (
         <div className="App">
-            {/* TODO:
-                - Run the dispatch on the visible divs to grab their content
-                -  */}
             {months.map((month: string) => (
                 <VisibilitySensor
-                    onChange={(isVisible: boolean) =>
-                        onVisibilityChange(isVisible, month)
-                    }
                     partialVisibility
+                    onChange={(isVisible: boolean) =>
+                        onVisibilityChange(
+                            isVisible,
+                            month,
+                            props.fetchPinsRequest
+                        )
+                    }
                     key={month}
                 >
                     <div id={month} key={month}>
@@ -58,8 +70,9 @@ const App: FunctionComponent<Props> = props => {
                             </Dimmer>
                         )}
                         {props.pins &&
-                            props.pins.map(pin => (
-                                <a href={pin.link} key={month + pin.id}>
+                            props.pins.get(month) &&
+                            props.pins.get(month)!.map(pin => (
+                                <a href={pin.link} key={uuid()}>
                                     <img
                                         className="fadeIn"
                                         style={resizeImage(
