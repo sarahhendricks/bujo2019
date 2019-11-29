@@ -50,6 +50,7 @@ const App: FunctionComponent<Props> = props => {
                         props.pins.map(pin => (
                             <a href={pin.link} key={month + pin.id}>
                                 <img
+                                    className="fadeIn"
                                     style={resizeImage(
                                         pin.image.original.height,
                                         pin.image.original.width
