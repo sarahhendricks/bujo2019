@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent } from "react";
 import "./App.css";
-import { Pinterest, isInView, months } from "./util";
+import { Pinterest, months } from "./util";
 import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
 import { selectPinsByMonth, selectIsLoadingPins } from "./store/pins/selectors";
@@ -25,6 +25,13 @@ const App: FunctionComponent<Props> = props => {
         });
     }, []);
 
+    const resizeImage = (originalHeight: number, originalWidth: number) => {
+        const isHorizontal = originalHeight <= originalWidth;
+        return isHorizontal
+            ? { height: "auto", width: "300px" }
+            : { height: "300px", width: "auto" };
+    };
+
     return (
         <div className="App">
             {/* TODO:
@@ -33,6 +40,7 @@ const App: FunctionComponent<Props> = props => {
                 -  */}
             {months.map(month => (
                 <div id={month} key={month}>
+                    <h1>{month}</h1>
                     {props.isLoadingPins && !props.pins && (
                         <Dimmer active inverted>
                             <Loader />
@@ -40,8 +48,12 @@ const App: FunctionComponent<Props> = props => {
                     )}
                     {props.pins &&
                         props.pins.map(pin => (
-                            <a href={pin.link} key={pin.id}>
+                            <a href={pin.link} key={month + pin.id}>
                                 <img
+                                    style={resizeImage(
+                                        pin.image.original.height,
+                                        pin.image.original.width
+                                    )}
                                     src={pin.image.original.url}
                                     alt={pin.note}
                                 />
