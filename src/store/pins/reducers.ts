@@ -14,7 +14,7 @@ export const isFetchingData = createReducer(false as boolean)
 export const pins = createReducer(Map<string, List<Pin>>()).handleAction(
     fetchPinsAsync.success,
     (state, action) => {
-        const updatedState = state.update(
+        const updatedState: Map<string, List<Pin>> = state.update(
             action.payload.month,
             (value = List()) => value.concat(action.payload.pins)
         );

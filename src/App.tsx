@@ -3,44 +3,27 @@ import "./App.css";
 import { Pinterest, months } from "./util";
 import { fetchPinsAsync } from "./store/pins/actions";
 import { connect } from "react-redux";
-import {
-    selectIsLoadingPins,
-    selectPins,
-    selectPinsByMonth
-} from "./store/pins/selectors";
-import { PinState } from "./store/pins/reducers";
-import { Loader, Dimmer } from "semantic-ui-react";
 import VisibilitySensor from "react-visibility-sensor";
-import uuid from "uuid";
+import { PayloadActionCreator } from "typesafe-actions";
+import Month from "./Month";
 
-const mapStateToProps = (state: PinState) => ({
-    isLoadingPins: selectIsLoadingPins(state),
-    // TODO: need to figure out how to get these dynamically...
-    // pins: selectPinsByMonth(state, { month: "may" })
-    pins: selectPins(state)
-});
 const dispatchProps = {
     fetchPinsRequest: fetchPinsAsync.request
 };
 
-type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
+type Props = typeof dispatchProps;
 
 const onVisibilityChange = (
     isVisible: boolean,
     month: string,
-    pinCallback: any
+    pinCallback: PayloadActionCreator<"FETCH_DATA_REQUEST", string>
 ) => {
     console.log(`the month is ${month} and I am visible: ${isVisible}`);
-    if (isVisible) {
+    if (isVisible && (month === "july" || month === "august")) {
+        // TODO: this needs to only be called when I need "more" to display, or even if my
+        // month is changing if I decide to make a poller that just operates on the most current month
         pinCallback(month);
     }
-};
-
-const resizeImage = (originalHeight: number, originalWidth: number) => {
-    const isHorizontal = originalHeight <= originalWidth;
-    return isHorizontal
-        ? { height: "auto", width: "300px" }
-        : { height: "300px", width: "auto" };
 };
 
 const App: FunctionComponent<Props> = props => {
@@ -62,33 +45,11 @@ const App: FunctionComponent<Props> = props => {
                     }
                     key={month}
                 >
-                    <div id={month} key={month}>
-                        <h1>{month}</h1>
-                        {props.isLoadingPins && !props.pins && (
-                            <Dimmer active inverted>
-                                <Loader />
-                            </Dimmer>
-                        )}
-                        {props.pins &&
-                            props.pins.get(month) &&
-                            props.pins.get(month)!.map(pin => (
-                                <a href={pin.link} key={uuid()}>
-                                    <img
-                                        className="fadeIn"
-                                        style={resizeImage(
-                                            pin.image.original.height,
-                                            pin.image.original.width
-                                        )}
-                                        src={pin.image.original.url}
-                                        alt={pin.note}
-                                    />
-                                </a>
-                            ))}
-                    </div>
+                    <Month month={month} />
                 </VisibilitySensor>
             ))}
         </div>
     );
 };
 
-export default connect(mapStateToProps, dispatchProps)(App);
+export default connect(null, dispatchProps)(App);
