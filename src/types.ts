@@ -12,4 +12,6 @@ export type Pin = {
 };
 export type BoardPinsResponse = {
     data: Array<Pin>;
+    hasNext?: boolean;
+    next?: () => BoardPinsResponse;
 };
