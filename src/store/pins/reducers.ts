@@ -4,11 +4,18 @@ import { combineReducers } from "redux";
 import { Pin } from "../../types";
 import { Map, List } from "immutable";
 
-export const isFetchingData = createReducer(false as boolean)
-    .handleAction([fetchPinsAsync.request], (_, __) => true)
-    .handleAction(
-        [fetchPinsAsync.success, fetchPinsAsync.failure],
-        (_, __) => false
+export const isFetchingData = createReducer(Map<string, boolean>())
+    .handleAction([fetchPinsAsync.request], (state, action) =>
+        state.update(action.payload, () => true)
+    )
+    .handleAction([fetchPinsAsync.success], (state, action) =>
+        state.update(action.payload.month, () => false)
+    )
+    .handleAction([fetchPinsAsync.failure], (state, action) =>
+        state.update(action.payload, () => false)
+    )
+    .handleAction([fetchPinsAsync.cancel], (state, action) =>
+        state.update(action.payload, () => false)
     );
 
 export const pins = createReducer(Map<string, List<Pin>>()).handleAction(

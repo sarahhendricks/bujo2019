@@ -9,5 +9,6 @@ type PinData = {
 export const fetchPinsAsync = createAsyncAction(
     "FETCH_DATA_REQUEST",
     "FETCH_DATA_SUCCESS",
-    "FETCH_DATA_FAILURE"
-)<string, PinData, string>();
+    "FETCH_DATA_FAILURE",
+    "FETCH_DATA_CANCEL"
+)<string, PinData, string, string>();

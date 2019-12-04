@@ -18,7 +18,6 @@ const onVisibilityChange = (
     month: string,
     pinCallback: PayloadActionCreator<"FETCH_DATA_REQUEST", string>
 ) => {
-    console.log(`the month is ${month} and I am visible: ${isVisible}`);
     if (isVisible && (month === "july" || month === "august")) {
         // TODO: this needs to only be called when I need "more" to display, or even if my
         // month is changing if I decide to make a poller that just operates on the most current month
@@ -28,7 +27,9 @@ const onVisibilityChange = (
 
 const App: FunctionComponent<Props> = props => {
     useEffect(() => {
-        Pinterest.login(() => {});
+        Pinterest.login(() => {
+            // TODO: think we might need to do some route redirecting in here
+        });
     }, []);
 
     return (
