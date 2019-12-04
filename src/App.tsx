@@ -8,7 +8,8 @@ import { PayloadActionCreator } from "typesafe-actions";
 import Month from "./Month";
 
 const dispatchProps = {
-    fetchPinsRequest: fetchPinsAsync.request
+    fetchPinsRequest: fetchPinsAsync.request,
+    fetchPinsCancel: fetchPinsAsync.cancel
 };
 
 type Props = typeof dispatchProps;
@@ -16,12 +17,15 @@ type Props = typeof dispatchProps;
 const onVisibilityChange = (
     isVisible: boolean,
     month: string,
-    pinCallback: PayloadActionCreator<"FETCH_DATA_REQUEST", string>
+    pinCallback: PayloadActionCreator<"FETCH_DATA_REQUEST", string>,
+    pinCancel: PayloadActionCreator<"FETCH_DATA_CANCEL", string>
 ) => {
     if (isVisible && (month === "july" || month === "august")) {
         // TODO: this needs to only be called when I need "more" to display, or even if my
         // month is changing if I decide to make a poller that just operates on the most current month
         pinCallback(month);
+    } else if (!isVisible) {
+        pinCancel(month);
     }
 };
 
@@ -41,7 +45,8 @@ const App: FunctionComponent<Props> = props => {
                         onVisibilityChange(
                             isVisible,
                             month,
-                            props.fetchPinsRequest
+                            props.fetchPinsRequest,
+                            props.fetchPinsCancel
                         )
                     }
                     key={month}
