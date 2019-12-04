@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { PinState } from "./store/pins/reducers";
 import { selectIsLoadingPins, selectPinsByMonth } from "./store/pins/selectors";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader, Segment } from "semantic-ui-react";
 import { Pin } from "./types";
 import uuid from "uuid";
 
@@ -29,9 +29,11 @@ const Month: FunctionComponent<Props> = ({ month, isLoadingPins, pins }) => {
         <div id={month} key={month}>
             <h1>{month}</h1>
             {isLoadingPins && !pins && (
-                <Dimmer active inverted>
-                    <Loader />
-                </Dimmer>
+                <Segment inverted>
+                    <Dimmer active inverted>
+                        <Loader />
+                    </Dimmer>
+                </Segment>
             )}
             {pins &&
                 pins.map((pin: Pin) => (
