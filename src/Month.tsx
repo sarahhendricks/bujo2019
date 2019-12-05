@@ -20,7 +20,11 @@ type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 const resizeImage = (originalHeight: number, originalWidth: number) => {
     const isHorizontal = originalHeight <= originalWidth;
     return isHorizontal
-        ? { height: "auto", width: "300px" }
+        ? {
+              height: "auto",
+              width: "300px",
+              top: "50%"
+          }
         : { height: "300px", width: "auto" };
 };
 
@@ -35,20 +39,22 @@ const Month: FunctionComponent<Props> = ({ month, isLoadingPins, pins }) => {
                     </Dimmer>
                 </Segment>
             )}
-            {pins &&
-                pins.map((pin: Pin) => (
-                    <a href={pin.link} key={uuid()}>
-                        <img
-                            className="fadeIn"
-                            style={resizeImage(
-                                pin.image.original.height,
-                                pin.image.original.width
-                            )}
-                            src={pin.image.original.url}
-                            alt={pin.note}
-                        />
-                    </a>
-                ))}
+            <div style={{ position: "relative" }}>
+                {pins &&
+                    pins.map((pin: Pin) => (
+                        <a href={pin.link} key={uuid()}>
+                            <img
+                                className="fadeIn"
+                                style={resizeImage(
+                                    pin.image.original.height,
+                                    pin.image.original.width
+                                )}
+                                src={pin.image.original.url}
+                                alt={pin.note}
+                            />
+                        </a>
+                    ))}
+            </div>
         </div>
     );
 };

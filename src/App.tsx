@@ -30,6 +30,14 @@ const onVisibilityChange = (
 };
 
 const App: FunctionComponent<Props> = props => {
+    const writeUserData = () => {
+        console.log("SAVING DATA");
+    };
+
+    const getUserData = () => {
+        console.log("RETRIEVED DATA");
+    };
+
     useEffect(() => {
         Pinterest.login(() => {
             // TODO: think we might need to do some route redirecting in here
