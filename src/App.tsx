@@ -18,8 +18,26 @@ type Props = typeof dispatchProps;
 // Making references
 const mayRef = databaseRef.child("may/");
 
-// Sync changes (updating the app from the writes -- might not need this)
-mayRef.on("value", snapshot => console.log(snapshot.val()));
+// Getting data from database
+mayRef.once("value", snapshot => console.log(snapshot.val()));
+
+// Adding data to the database
+databaseRef.child("june/").set({
+    "138767232255530441": {
+        id: "138767232255530441",
+        note: "VSCO - theboyfriendmaterial",
+        link:
+            "https://www.pinterest.com/r/pin/138767232255530441/5065021390669794430/52dc6b67d50543f7384b03ec1af1bda3982711c86fe5a1251766f02b5152ce86",
+        image: {
+            original: {
+                url:
+                    "https://i.pinimg.com/originals/d1/e8/f2/d1e8f2c684619423cd19d0167c8559ba.jpg",
+                width: 600,
+                height: 908
+            }
+        }
+    }
+});
 
 const onVisibilityChange = (
     isVisible: boolean,
@@ -28,8 +46,7 @@ const onVisibilityChange = (
     pinCancel: PayloadActionCreator<"FETCH_DATA_CANCEL", string>
 ) => {
     if (isVisible && (month === "july" || month === "august")) {
-        // TODO: this needs to only be called when I need "more" to display, or even if my
-        // month is changing if I decide to make a poller that just operates on the most current month
+        // TODO: change this to call from the database instead
         pinCallback(month);
     } else if (!isVisible) {
         pinCancel(month);
