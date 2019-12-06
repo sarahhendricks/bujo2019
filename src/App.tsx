@@ -7,6 +7,7 @@ import VisibilitySensor from "react-visibility-sensor";
 import { PayloadActionCreator } from "typesafe-actions";
 import Month from "./Month";
 import databaseRef from "./config";
+import { Pin } from "./types";
 
 const dispatchProps = {
     fetchPinsRequest: fetchPinsAsync.request,
@@ -19,24 +20,12 @@ type Props = typeof dispatchProps;
 const mayRef = databaseRef.child("may/");
 
 // Getting data from database
-mayRef.once("value", snapshot => console.log(snapshot.val()));
-
-// Adding data to the database
-databaseRef.child("june/").set({
-    "138767232255530441": {
-        id: "138767232255530441",
-        note: "VSCO - theboyfriendmaterial",
-        link:
-            "https://www.pinterest.com/r/pin/138767232255530441/5065021390669794430/52dc6b67d50543f7384b03ec1af1bda3982711c86fe5a1251766f02b5152ce86",
-        image: {
-            original: {
-                url:
-                    "https://i.pinimg.com/originals/d1/e8/f2/d1e8f2c684619423cd19d0167c8559ba.jpg",
-                width: 600,
-                height: 908
-            }
-        }
-    }
+mayRef.once("value", snapshot => {
+    snapshot.forEach(childSnapshot => {
+        var value = childSnapshot.val() as Pin;
+        console.log(`value.id: ${value.id}, value.image: ${value.image}`);
+        // console.log(`value: ${value}, url: ${value.image.original.url}`);
+    });
 });
 
 const onVisibilityChange = (
@@ -57,6 +46,7 @@ const App: FunctionComponent<Props> = props => {
     useEffect(() => {
         Pinterest.login(() => {
             // TODO: think we might need to do some route redirecting in here
+            props.fetchPinsRequest("may");
         });
     }, []);
 
