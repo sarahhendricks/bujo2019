@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import VisibilitySensor from "react-visibility-sensor";
 import { PayloadActionCreator } from "typesafe-actions";
 import Month from "./Month";
+import databaseRef from "./config";
 
 const dispatchProps = {
     fetchPinsRequest: fetchPinsAsync.request,
@@ -13,6 +14,12 @@ const dispatchProps = {
 };
 
 type Props = typeof dispatchProps;
+
+// Making references
+const mayRef = databaseRef.child("may/");
+
+// Sync changes (updating the app from the writes -- might not need this)
+mayRef.on("value", snapshot => console.log(snapshot.val()));
 
 const onVisibilityChange = (
     isVisible: boolean,
@@ -30,14 +37,6 @@ const onVisibilityChange = (
 };
 
 const App: FunctionComponent<Props> = props => {
-    const writeUserData = () => {
-        console.log("SAVING DATA");
-    };
-
-    const getUserData = () => {
-        console.log("RETRIEVED DATA");
-    };
-
     useEffect(() => {
         Pinterest.login(() => {
             // TODO: think we might need to do some route redirecting in here
@@ -50,12 +49,13 @@ const App: FunctionComponent<Props> = props => {
                 <VisibilitySensor
                     partialVisibility
                     onChange={(isVisible: boolean) =>
-                        onVisibilityChange(
-                            isVisible,
-                            month,
-                            props.fetchPinsRequest,
-                            props.fetchPinsCancel
-                        )
+                        // onVisibilityChange(
+                        //     isVisible,
+                        //     month,
+                        //     props.fetchPinsRequest,
+                        //     props.fetchPinsCancel
+                        // )
+                        console.log("visible now: " + isVisible)
                     }
                     key={month}
                 >
