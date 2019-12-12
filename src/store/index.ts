@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import { createEpicMiddleware } from "redux-observable";
 import { RootAction, RootState } from "typesafe-actions";
-import { pinsEpic } from "./pins/epics";
+import { fetchPinsEpic } from "./pins/epics";
 import pinsReducer from "./pins/reducers";
 
 export const epicMiddleware = createEpicMiddleware<
@@ -12,6 +12,6 @@ export const epicMiddleware = createEpicMiddleware<
 
 const store = createStore(pinsReducer, applyMiddleware(epicMiddleware));
 
-epicMiddleware.run(pinsEpic);
+epicMiddleware.run(fetchPinsEpic);
 
 export default store;

@@ -8,7 +8,10 @@ import databaseRef from "../../config";
 
 const pinsObservable = bindCallback(Pinterest.pins);
 
-export const pinsEpic: Epic<RootAction, RootAction, RootState> = (action$, _) =>
+export const fetchPinsEpic: Epic<RootAction, RootAction, RootState> = (
+    action$,
+    _
+) =>
     action$.pipe(
         filter(isActionOf(fetchPinsAsync.request)),
         mergeMap(action =>
