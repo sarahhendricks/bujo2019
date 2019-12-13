@@ -10,10 +10,9 @@ const dispatchProps = {
 type Props = typeof dispatchProps;
 
 const Admin: FunctionComponent<Props> = ({ fetchPinsRequest }) => {
-    const dataTransferMonth = "august";
+    const dataTransferMonth = "february";
     useEffect(() => {
         Pinterest.login(() => {
-            console.log("here I am!");
             fetchPinsRequest(dataTransferMonth);
         });
     }, [fetchPinsRequest]);

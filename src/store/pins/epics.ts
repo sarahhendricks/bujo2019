@@ -17,12 +17,13 @@ export const fetchPinsEpic: Epic<RootAction, RootAction, RootState> = (
         mergeMap(action =>
             pinsObservable(action.payload).pipe(
                 map(response => {
+                    console.log(JSON.stringify(response));
                     if (response.hasNext) {
                         // recursively call getting more data
                         console.log(
                             `Going to get more data for ${action.payload}`
                         );
-                        response.next!();
+                        // response.page!.next();
                     }
 
                     // Adding data to database

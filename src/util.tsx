@@ -20,7 +20,8 @@ export const Pinterest = {
     pins: (boardName: string, callback: (json: BoardPinsResponse) => void) => {
         console.log(`About to call getting the pins for ${boardName}`);
         var params = {
-            fields: "id, note, link, image"
+            fields: "id, note, link, image",
+            limit: 100
         };
         var boardId = `${boardName}-inspo`;
         PDK.request(`/boards/daisyinaglass/${boardId}/pins/`, params, callback);
@@ -44,7 +45,6 @@ export const Pinterest = {
 };
 
 export const months = List.of(
-    "january",
     "february",
     "march",
     "april",
