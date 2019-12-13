@@ -22,8 +22,7 @@ const resizeImage = (originalHeight: number, originalWidth: number) => {
     return isHorizontal
         ? {
               height: "auto",
-              width: "300px",
-              top: "50%"
+              width: "300px"
           }
         : { height: "300px", width: "auto" };
 };
@@ -39,7 +38,9 @@ const Month: FunctionComponent<Props> = ({ month, isLoadingPins, pins }) => {
                     </Dimmer>
                 </Segment>
             )}
-            <div style={{ position: "relative" }}>
+            <div
+            // style={{ position: "absolute" }}
+            >
                 {pins &&
                     pins.map((pin: Pin) => (
                         <a href={pin.link} key={uuid()}>

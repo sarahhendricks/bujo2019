@@ -20,13 +20,11 @@ const App: FunctionComponent<Props> = props => {
     useEffect(() => {
         months.forEach((month: string) => {
             const monthRef = databaseRef.child(month + "/");
-            console.log(`monthRef: ${monthRef}`);
 
             // Getting data from database
             monthRef.once("value", snapshot => {
                 snapshot.forEach(childSnapshot => {
                     var value = childSnapshot.val() as Pin;
-                    console.log(`value is: ${JSON.stringify(value)}`);
                     props.addPin({ month, pin: value });
                 });
             });
@@ -35,21 +33,17 @@ const App: FunctionComponent<Props> = props => {
 
     return (
         <div className="App">
-            {months.map((month: string) => {
-                // Making references
-
-                return (
-                    <VisibilitySensor
-                        partialVisibility
-                        onChange={(isVisible: boolean) =>
-                            onVisibilityChange(isVisible, month)
-                        }
-                        key={month}
-                    >
-                        <Month month={month} />
-                    </VisibilitySensor>
-                );
-            })}
+            {months.map((month: string) => (
+                <VisibilitySensor
+                    partialVisibility
+                    onChange={(isVisible: boolean) =>
+                        onVisibilityChange(isVisible, month)
+                    }
+                    key={month}
+                >
+                    <Month month={month} />
+                </VisibilitySensor>
+            ))}
         </div>
     );
 };
