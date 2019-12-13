@@ -22,14 +22,27 @@ const resizeImage = (originalHeight: number, originalWidth: number) => {
     return isHorizontal
         ? {
               height: "auto",
-              width: "300px"
+              width: "300px",
+              top: `${Math.floor(Math.random() * 100)}%`,
+              left: `${Math.floor(Math.random() * 100)}%`,
+              position: "absolute" as "absolute"
           }
-        : { height: "300px", width: "auto" };
+        : {
+              height: "300px",
+              width: "auto",
+              top: `${Math.floor(Math.random() * 100)}%`,
+              left: `${Math.floor(Math.random() * 100)}%`,
+              position: "absolute" as "absolute"
+          };
 };
 
 const Month: FunctionComponent<Props> = ({ month, isLoadingPins, pins }) => {
     return (
-        <div id={month} key={month}>
+        <div
+            id={month}
+            key={month}
+            style={{ height: "1400px", width: "1000px" }}
+        >
             <h1>{month}</h1>
             {isLoadingPins && !pins && (
                 <Segment inverted>
@@ -39,7 +52,11 @@ const Month: FunctionComponent<Props> = ({ month, isLoadingPins, pins }) => {
                 </Segment>
             )}
             <div
-            // style={{ position: "absolute" }}
+                style={{
+                    position: "absolute",
+                    height: "1000px",
+                    width: "1000px"
+                }}
             >
                 {pins &&
                     pins.map((pin: Pin) => (
