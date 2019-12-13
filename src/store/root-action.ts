@@ -1,5 +1,6 @@
-import { fetchPinsAsync } from "./pins/actions";
+import { fetchPinsAsync, addPin } from "./pins/actions";
 
 export default {
-    fetchPins: fetchPinsAsync
+    fetchPins: fetchPinsAsync,
+    addPin: addPin
 };

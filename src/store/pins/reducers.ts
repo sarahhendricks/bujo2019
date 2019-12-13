@@ -1,5 +1,5 @@
 import { createReducer } from "typesafe-actions";
-import { fetchPinsAsync } from "./actions";
+import { fetchPinsAsync, addPin } from "./actions";
 import { combineReducers } from "redux";
 import { Pin } from "../../types";
 import { Map, List } from "immutable";
@@ -19,15 +19,11 @@ export const isFetchingData = createReducer(Map<string, boolean>())
     );
 
 export const pins = createReducer(Map<string, List<Pin>>()).handleAction(
-    fetchPinsAsync.success,
-    (state, action) => {
-        const updatedState: Map<string, List<Pin>> = state.update(
-            action.payload.month,
-            (value = List()) => value.concat(action.payload.pins)
-        );
-        console.log(`This is now the state: ${JSON.stringify(updatedState)}`);
-        return updatedState;
-    }
+    addPin,
+    (state, action) =>
+        state.update(action.payload.month, (value = List()) =>
+            value.concat(action.payload.pin)
+        )
 );
 
 const pinsReducer = combineReducers({
