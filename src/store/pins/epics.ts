@@ -1,12 +1,12 @@
 import { Epic } from "redux-observable";
 import { RootAction, RootState, isActionOf } from "typesafe-actions";
 import { fetchPinsAsync } from "./actions";
-import { filter, map, catchError, mergeMap } from "rxjs/operators";
-import { bindCallback, of } from "rxjs";
+import { filter, map, catchError, mergeMap, expand, tap } from "rxjs/operators";
+import { bindCallback, of, empty } from "rxjs";
 import { Pinterest } from "../../util";
 import databaseRef from "../../config";
 
-const pinsObservable = bindCallback(Pinterest.pins);
+// const pinsObservable = bindCallback(Pinterest.pins);
 
 export const fetchPinsEpic: Epic<RootAction, RootAction, RootState> = (
     action$,
@@ -15,16 +15,28 @@ export const fetchPinsEpic: Epic<RootAction, RootAction, RootState> = (
     action$.pipe(
         filter(isActionOf(fetchPinsAsync.request)),
         mergeMap(action =>
-            pinsObservable(action.payload).pipe(
-                map(response => {
-                    console.log(JSON.stringify(response));
+            bindCallback(Pinterest.pins)(action.payload).pipe(
+                tap(response =>
+                    console.log("Here is the current response: %o", response)
+                ),
+                expand(response => {
+                    console.log(
+                        `Entering the expand with resposne %o`,
+                        response
+                    );
                     if (response.hasNext) {
-                        // recursively call getting more data
                         console.log(
-                            `Going to get more data for ${action.payload}`
+                            `Think the response has more, calling now.`
                         );
-                        // response.page!.next();
+                        console.log(response.next());
+                        return of(response.next());
+                    } else {
+                        console.log("No more data to get, returning empty.");
+                        return empty();
                     }
+                }),
+                map(response => {
+                    console.log("About to add data to the database");
 
                     // Adding data to database
                     response.data.forEach(pin =>

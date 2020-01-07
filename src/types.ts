@@ -15,6 +15,7 @@ export type BoardPinsResponse = {
     hasNext?: boolean;
     page?: {
         cursor: string;
-        next: () => BoardPinsResponse;
+        next: string;
     };
+    next: () => BoardPinsResponse;
 };
