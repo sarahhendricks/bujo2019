@@ -5,6 +5,7 @@ import { selectIsLoadingPins, selectPinsByMonth } from "./store/pins/selectors";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 import { Pin } from "./types";
 import uuid from "uuid";
+import { CSSTransition } from "react-transition-group";
 
 type OwnProps = {
     month: string;
@@ -19,19 +20,21 @@ type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 
 const resizeImage = (originalHeight: number, originalWidth: number) => {
     const isHorizontal = originalHeight <= originalWidth;
+    const top = Math.floor(Math.random() * 95);
+    const left = Math.floor(Math.random() * 95);
     return isHorizontal
         ? {
               height: "auto",
               width: "300px",
-              top: `${Math.floor(Math.random() * 100)}%`,
-              left: `${Math.floor(Math.random() * 100)}%`,
+              top: `${top}%`,
+              left: `${left}%`,
               position: "absolute" as "absolute"
           }
         : {
               height: "300px",
               width: "auto",
-              top: `${Math.floor(Math.random() * 100)}%`,
-              left: `${Math.floor(Math.random() * 100)}%`,
+              top: `${top}%`,
+              left: `${left}%`,
               position: "absolute" as "absolute"
           };
 };
@@ -55,22 +58,30 @@ const Month: FunctionComponent<Props> = ({ month, isLoadingPins, pins }) => {
                 style={{
                     position: "absolute",
                     height: "1000px",
-                    width: "1000px"
+                    width: "100%",
+                    padding: "0 150px 0 0"
                 }}
             >
                 {pins &&
                     pins.map((pin: Pin) => (
-                        <a href={pin.link} key={uuid()}>
-                            <img
-                                className="fadeIn"
-                                style={resizeImage(
-                                    pin.image.original.height,
-                                    pin.image.original.width
-                                )}
-                                src={pin.image.original.url}
-                                alt={pin.note}
-                            />
-                        </a>
+                        <CSSTransition
+                            in={true}
+                            timeout={5000}
+                            classNames={"fade"}
+                            key={uuid()}
+                        >
+                            <a href={pin.link}>
+                                <img
+                                    // className="fadeIn"
+                                    style={resizeImage(
+                                        pin.image.original.height,
+                                        pin.image.original.width
+                                    )}
+                                    src={pin.image.original.url}
+                                    alt={pin.note}
+                                />
+                            </a>
+                        </CSSTransition>
                     ))}
             </div>
         </div>
