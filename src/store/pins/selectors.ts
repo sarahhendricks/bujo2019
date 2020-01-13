@@ -7,5 +7,3 @@ export const selectPins = (state: PinState) => state.pins;
 // not the whole page.
 export const selectPinsByMonth = (state: PinState, props: { month: string }) =>
     state.pins.get(props.month);
-
-export const selectIsLoadingPins = (state: PinState) => state.isFetchingData;

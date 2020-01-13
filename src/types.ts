@@ -10,12 +10,3 @@ export type Pin = {
         };
     };
 };
-export type BoardPinsResponse = {
-    data: Array<Pin>;
-    hasNext?: boolean;
-    page?: {
-        cursor: string;
-        next: string;
-    };
-    next: () => BoardPinsResponse;
-};
