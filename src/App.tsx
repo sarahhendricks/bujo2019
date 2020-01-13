@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import "./App.css";
 import { months } from "./util";
-import VisibilitySensor from "react-visibility-sensor";
 import Month from "./Month";
 import databaseRef from "./config";
 import { Pin } from "./types";
@@ -13,8 +12,6 @@ const dispatchProps = {
 };
 
 type Props = typeof dispatchProps;
-
-const onVisibilityChange = (isVisible: boolean, monthRef: string) => {};
 
 const App: FunctionComponent<Props> = props => {
     useEffect(() => {
@@ -34,15 +31,7 @@ const App: FunctionComponent<Props> = props => {
     return (
         <div className="App">
             {months.map((month: string) => (
-                <VisibilitySensor
-                    partialVisibility
-                    onChange={(isVisible: boolean) =>
-                        onVisibilityChange(isVisible, month)
-                    }
-                    key={month}
-                >
-                    <Month month={month} />
-                </VisibilitySensor>
+                <Month key={month} month={month} />
             ))}
         </div>
     );

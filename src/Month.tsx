@@ -4,7 +4,7 @@ import { PinState } from "./store/pins/reducers";
 import { selectPinsByMonth } from "./store/pins/selectors";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 import { Pin } from "./types";
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import LazyLoad from "react-lazyload";
 
 const containerWidth = 1000;
@@ -73,27 +73,28 @@ const Month: FunctionComponent<Props> = ({ month, pins }) => {
                         padding: "0 150px 0 0"
                     }}
                 >
-                    {pins &&
-                        pins.map((pin: Pin) => (
-                            <CSSTransition
-                                in={true}
-                                timeout={5000}
-                                classNames={"fade"}
-                                key={pin.id}
-                            >
-                                <a href={pin.link}>
-                                    <img
-                                        // className="fadeIn"
-                                        style={resizeImage(
-                                            pin.image.original.height,
-                                            pin.image.original.width
-                                        )}
-                                        src={pin.image.original.url}
-                                        alt={pin.note}
-                                    />
-                                </a>
-                            </CSSTransition>
-                        ))}
+                    <TransitionGroup>
+                        {pins &&
+                            pins.map((pin: Pin) => (
+                                <CSSTransition
+                                    in={true}
+                                    timeout={5000}
+                                    classNames={"fade"}
+                                    key={pin.id}
+                                >
+                                    <a href={pin.link}>
+                                        <img
+                                            style={resizeImage(
+                                                pin.image.original.height,
+                                                pin.image.original.width
+                                            )}
+                                            src={pin.image.original.url}
+                                            alt={pin.note}
+                                        />
+                                    </a>
+                                </CSSTransition>
+                            ))}
+                    </TransitionGroup>
                 </div>
             </LazyLoad>
         </div>
