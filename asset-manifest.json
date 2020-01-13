@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/bujo2019/static/css/main.1e269d49.chunk.css",
+    "main.js": "/bujo2019/static/js/main.e6253a38.chunk.js",
+    "main.js.map": "/bujo2019/static/js/main.e6253a38.chunk.js.map",
+    "runtime-main.js": "/bujo2019/static/js/runtime-main.16321d12.js",
+    "runtime-main.js.map": "/bujo2019/static/js/runtime-main.16321d12.js.map",
+    "static/css/2.d750f551.chunk.css": "/bujo2019/static/css/2.d750f551.chunk.css",
+    "static/js/2.ee86f3da.chunk.js": "/bujo2019/static/js/2.ee86f3da.chunk.js",
+    "static/js/2.ee86f3da.chunk.js.map": "/bujo2019/static/js/2.ee86f3da.chunk.js.map",
+    "index.html": "/bujo2019/index.html",
+    "precache-manifest.1d713738a2b37fe93d3e1d7911c76eab.js": "/bujo2019/precache-manifest.1d713738a2b37fe93d3e1d7911c76eab.js",
+    "service-worker.js": "/bujo2019/service-worker.js",
+    "static/css/2.d750f551.chunk.css.map": "/bujo2019/static/css/2.d750f551.chunk.css.map",
+    "static/css/main.1e269d49.chunk.css.map": "/bujo2019/static/css/main.1e269d49.chunk.css.map",
+    "static/media/semantic.min.css": "/bujo2019/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.16321d12.js",
+    "static/css/2.d750f551.chunk.css",
+    "static/js/2.ee86f3da.chunk.js",
+    "static/css/main.1e269d49.chunk.css",
+    "static/js/main.e6253a38.chunk.js"
+  ]
+}
