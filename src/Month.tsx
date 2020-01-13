@@ -7,6 +7,9 @@ import { Pin } from "./types";
 import { CSSTransition } from "react-transition-group";
 import LazyLoad from "react-lazyload";
 
+const containerWidth = 1000;
+const containerHeight = 1000;
+
 type OwnProps = {
     month: string;
 };
@@ -25,17 +28,17 @@ const resizeImage = (originalHeight: number, originalWidth: number) => {
               height: "auto",
               width: "300px",
               top: `${Math.floor(
-                  Math.random() * (1000 - originalHeight * ratio)
+                  Math.random() * (containerHeight - originalHeight * ratio)
               )}px`,
-              left: `${Math.floor(Math.random() * (1000 - 300))}px`,
+              left: `${Math.floor(Math.random() * (containerWidth - 300))}px`,
               position: "absolute" as "absolute"
           }
         : {
               height: "300px",
               width: "auto",
-              top: `${Math.floor(Math.random() * (1000 - 300))}px`,
+              top: `${Math.floor(Math.random() * (containerHeight - 300))}px`,
               left: `${Math.floor(
-                  Math.random() * (1000 - originalWidth * ratio)
+                  Math.random() * (containerWidth - originalWidth * ratio)
               )}px`,
               position: "absolute" as "absolute"
           };
@@ -56,9 +59,8 @@ const Month: FunctionComponent<Props> = ({ month, pins }) => {
             key={month}
             style={{
                 height: "1400px",
-                width: "1000px",
-                margin: "0 auto",
-                backgroundColor: "#aabbcc"
+                width: `${containerWidth}px`,
+                margin: "0 auto"
             }}
         >
             <h1>{month}</h1>
@@ -66,16 +68,11 @@ const Month: FunctionComponent<Props> = ({ month, pins }) => {
                 <div
                     style={{
                         position: "relative",
-                        height: "1000px",
+                        height: `${containerHeight}px`,
                         width: "100%",
-                        padding: "0 150px 0 0",
-                        backgroundColor: "#aaaaaa"
+                        padding: "0 150px 0 0"
                     }}
                 >
-                    <img
-                        style={resizeImage(300, 340)}
-                        src="https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/12234558/Chinook-On-White-03.jpg"
-                    />
                     {pins &&
                         pins.map((pin: Pin) => (
                             <CSSTransition
